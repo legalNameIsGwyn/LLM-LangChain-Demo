@@ -1,0 +1,18 @@
+{
+  "name": "llm-langchain-demo",
+  "version": "1.0.0",
+  "description": "This chatbot uses a local instance of ollama using the langchain framework to answer questions about Baguio City's environment based on data gathered by [Insert Group Members]. Its main purpose is to show how LLM's.",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "langchain": "^0.1.37",
+    "nodemon": "^3.1.0"
+  }
+}
