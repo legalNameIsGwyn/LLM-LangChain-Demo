@@ -10,55 +10,63 @@ import { createRetrievalChain } from "langchain/chains/retrieval";
 
 const llm = new ChatOllama({
   baseUrl: "http://localhost:11434", // Default value
-  model: "mistral",
+  model: "llama3",
 });
-
-
-// Load document
-const loader = new TextLoader("./documents/chatbot.txt"); // CHANGE to Terms.txt
-const docs = await loader.load();
 
 const app = express();
 const PORT = 3000;
 
-// split documents
-const textSplitter = new RecursiveCharacterTextSplitter({
-    chunkSize: 300,
-    chunkOverlap: 10,
-    separators: ["\n\n", "."],
-});
+// return vector store of document 
+export const loadDocuments = async (fileName) => {
+  // Load document
+  const loader = new TextLoader(`./documents/${fileName}.txt`); // CHANGE to Terms.txt
+  const docs = await loader.load();
 
-const allSplits = await textSplitter.splitDocuments(docs);
-  
-const vectorStore = await MemoryVectorStore.fromDocuments(
-    allSplits,
-    new OllamaEmbeddings()
-);
-const prompt = ChatPromptTemplate.fromTemplate(`
-  Answer the users question.
-  Context: {context}
-  Question: {input}
-`);
+  // split documents
+  const textSplitter = new RecursiveCharacterTextSplitter({
+      chunkSize: 700,
+      chunkOverlap: 100,
+      separators: ["\n\n", "."],
+  });
 
-const chain = await createStuffDocumentsChain({
-  llm,
-  prompt
-})
+  const allSplits = await textSplitter.splitDocuments(docs);
+    
+  return await MemoryVectorStore.fromDocuments(
+      allSplits,
+      new OllamaEmbeddings()
+  );
+}
 
-const retriever = vectorStore.asRetriever();
+// creates RAG chain given a vector store
+export const createChain = async (vectorStore) => {
 
-const retrievalChain = await createRetrievalChain({
-  combineDocsChain: chain,
-  retriever
-});
+  const prompt = ChatPromptTemplate.fromTemplate(`
+    Answer the users question in no more tha 35 words.
+    Context: {context}
+    Question: {input}
+  `);
 
+  const chain = await createStuffDocumentsChain({
+    llm,
+    prompt
+  })
+
+  const retriever = vectorStore.asRetriever();
+
+  return await createRetrievalChain({
+    combineDocsChain: chain,
+    retriever
+  });
+}
+
+// sample way to use
+const store = await loadDocuments("chatbot")
 console.log('Document loaded');
+const model = await createChain(store)
 
-const res = await retrievalChain.invoke({
-  input: "What is Baguio infamous for?"
-})
-
-console.log(res)
+console.log(await model.invoke({
+  input: "What is baguio infamous for?"
+}))
 
 app.get("/", (req, res) => {
   res.send("Hello from Express!");
