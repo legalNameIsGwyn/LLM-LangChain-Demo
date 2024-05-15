@@ -1,0 +1,23 @@
+Q0: What are must-visit tourist locations in the city
+A0: I don't know. The context retrieved does not provide information about must-visit tourist locations in Baguio City.
+T0: 14572.742700000294
+
+Q1: When should I visit
+A1: According to the context, the best time to visit Baguio City is during the cool months of March, April, and May when it serves as the "Summer Capital" of the Philippines. During this time, the city experiences a significant influx of tourists from the lowlands and Manila. However, I don't know if there are specific must-visit locations during these months.
+T1: 25219.900100000203
+
+Q2: Are there any events I should look into
+A2: The context does not provide information about upcoming events in Baguio City. However, as the "Summer Capital" of the Philippines, the city may host various summer-related events or festivals during the months of March to May. But I don't know if there are any specific events happening around those months
+T2: 25438.39979999978
+
+Q3: How do I get around the city
+A3: According to the context, most residents of Baguio City opt for walking and public transportation, while visitors tend to bring their own vehicles, contributing to traffic congestion and pollution. However, I don't know about specific transportation options or routes within the city
+T3: 25271.238499999978
+
+Q4: is there anything I should be weary of
+A4: Yes, according to the context, air and noise pollution are growing concerns in Baguio City. The increasing number of motor vehicles in the city results in harmful emissions that have a detrimental impact on air quality, while noise pollution from vehicle traffic and construction activities disturb the peace and tranquility that Baguio was once known for. Therefore, it's essential to be aware of these environmental concerns when visiting the city
+T4: 25990.359699999914
+
+Q5: Overall, would you say the city is worth visiting
+A5: Yes, based on the context, Baguio City is a popular tourist destination in the Philippines that offers various natural attractions, cultural experiences, and sustainable practices. The cool climate and beautiful scenery make it an excellent place to visit any time of the year. However, as with any tourist destination, it's crucial to be mindful of environmental concerns and responsible tourism practices
+T5: 26080.44560000021

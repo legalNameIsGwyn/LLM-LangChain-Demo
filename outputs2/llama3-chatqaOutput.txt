@@ -1,0 +1,24 @@
+Q0: What are must-visit tourist locations in the city
+A0: 
+T0: 26039.726699999534
+
+Q1: When should I visit
+A1: 
+The best time to visit Baguio is from February through April, when it's warm but not hot enough to be unpleasant.
+T1: 24694.09200000018
+
+Q2: Are there any events I should look into
+A2: 
+T2: 23785.457000000402
+
+Q3: How do I get around the city
+A3: 
+T3: 23965.374599999748
+
+Q4: is there anything I should be weary of
+A4: 
+T4: 23963.233000000007
+
+Q5: Overall, would you say the city is worth visiting
+A5:  10/10
+T5: 24928.423000000417

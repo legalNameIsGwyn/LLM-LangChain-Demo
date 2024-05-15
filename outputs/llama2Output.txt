@@ -1,0 +1,23 @@
+Q0: What are must-visit tourist locations in the city
+A0: I don't know. The context retrieved does not provide information about must-visit tourist locations in the city. Therefore, I cannot answer this question. Please provide a different question that is relevant to the context.
+T0: 12556.8451000005
+
+Q1: When should I visit
+A1: I don't know. The context retrieved does not provide information about the best time to visit the city. Please provide a different question that is relevant to the context.
+T1: 23962.243400000036
+
+Q2: Are there any events I should look into
+A2: I don't know. The context retrieved does not provide information about upcoming events in the city. Please provide a different question that is relevant to the context.
+T2: 23836.159799999557
+
+Q3: How do I get around the city
+A3: According to the context, mass transportation through "modern jeepneys" and trams are being planned for implementation, and bicycle lanes and road sharing are given priority. Therefore, you can expect to get around the city using these modes of transportation. Additionally, the city is also one of the pilot cities for Low-Carbon Urban Transport with the UNDP which will test the viability of electric vehicles for mass transportation.
+T3: 25366.07040000055
+
+Q4: is there anything I should be weary of
+A4: The context suggests that there are environmental concerns in the city, such as air pollution and solid waste management, due to the surge in tourist numbers. Therefore, you may want to be mindful of these issues when visiting the city and take steps to minimize your impact on the environment. Additionally, the city is facing challenges in managing its watersheds, green spaces, and drainage system, so you may want to research these issues before visiting and take appropriate precautions.
+T4: 25664.585799999535
+
+Q5: Overall, would you say the city is worth visiting
+A5: Yes, based on the context, it seems that Baguio City is a popular tourist destination known for its natural beauty and outdoor recreational activities. The city has been recognized for its efforts in sustainable tourism practices, which suggests that it prioritizes environmental sustainability. However, as with any tourist destination, there may be environmental concerns that visitors should be aware of and take steps to minimize their impact. Overall, Baguio City appears to be a worthwhile visit for those who value both natural beauty and sustainable tourism practices
+T5: 25512.37749999948

@@ -1,0 +1,27 @@
+Q0: What are must-visit tourist locations in the city
+A0:  1. The famous City Hall.
+2. A historic park that is worth visiting.
+3. An amazing museum where many historical artifacts were kept safe.
+T0: 26487.68479999993
+
+Q1: When should I visit
+A1: If you want to experience the nippy winter air, Christmas season is when Baguio glows with the nippy winter air
+T1: 24912.64140000008
+
+Q2: Are there any events I should look into
+A2:  1. Panagbenga Festival
+2. Paskuhan
+3. Flower festival
+T2: 24351.387400000356
+
+Q3: How do I get around the city
+A3: The Local Public Transport Route Plan (LPTRP) for the city is already on its second and last reading at the City Council before its eventual approval. The plan embodies the modernization of public transport where old vehicles that are at least 15-years old shall be decommissioned and exchanged for Euro 4-compliant or electric vehicles.
+T3: 25320.01860000007
+
+Q4: is there anything I should be weary of
+A4: Rehabilitation efforts in the city have been slow as the DENR has identified several areas of concern due to illegal quarrying, tree-cutting, and dumping of garbage in watersheds.
+T4: 23905.799599999562
+
+Q5: Overall, would you say the city is worth visiting
+A5: php echo do_shortcode('[contact-form][contact-field label="Name" type="name"][/contact-field][contact-field label="Email" type="email"[contact-field][/contact-form]
+T5: 24648.88310000021

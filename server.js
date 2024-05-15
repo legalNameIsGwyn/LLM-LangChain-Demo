@@ -14,20 +14,13 @@ import {
 } from "@langchain/core/messages";
 import { createStuffDocumentsChain } from "langchain/chains/combine_documents";
 import { createRetrievalChain } from "langchain/chains/retrieval";
-import {
-  RunnableSequence,
-  RunnablePassthrough,
-} from "@langchain/core/runnables";
-import { StringOutputParser } from "@langchain/core/output_parsers";
-import { formatDocumentsAsString } from "langchain/util/document";
 import { createHistoryAwareRetriever } from "langchain/chains/history_aware_retriever";
 
+import fs from 'fs'
 const llm = new ChatOllama({
   baseUrl: "http://localhost:11434", // Default value
   model: "llama3",
 });
-
-
 
 const app = express();
 const PORT = 3000;
@@ -42,7 +35,7 @@ export const loadDocuments = async (fileName) => {
   const textSplitter = new RecursiveCharacterTextSplitter({
       chunkSize: 700,
       chunkOverlap: 100,
-      separators: ["\n\n", "."],
+      separators: ["\n\n", "\n", "."],
   });
 
   const allSplits = await textSplitter.splitDocuments(docs);
@@ -70,7 +63,7 @@ export const loadDocuments = async (fileName) => {
 //   input: "What are they?"
 // })
 // console.log(res)
-export const context = async (vectorStore) => {
+export const context = async (vectorStore, ai) => {
   const retriever = vectorStore.asRetriever();
 
   // Contextualize question
@@ -86,14 +79,14 @@ export const context = async (vectorStore) => {
     ["human", "{input}"],
   ]);
   const historyAwareRetriever = await createHistoryAwareRetriever({
-    llm,
+    llm: ai,
     retriever,
     rephrasePrompt: contextualizeQPrompt,
   });
 
   // Answer question
   const qaSystemPrompt = `
-  Use the following pieces of retrieved context to answer the question. If you don't know the answer, just say that you don't know. Use three sentences maximum and keep the answer concise. Don't mention you got it from what you've read or the context.
+  Use the following pieces of retrieved context to answer the questions about Baguio City. IF the question is unrelated to the context, say you don't know or it's not a relevant question. Keep the answer short and concise.".
   \n\n
   {context}`;
   const qaPrompt = ChatPromptTemplate.fromMessages([
@@ -103,7 +96,7 @@ export const context = async (vectorStore) => {
   ]);
 
   const questionAnswerChain = await createStuffDocumentsChain({
-    llm,
+    llm: ai,
     prompt: qaPrompt,
   });
   
@@ -112,8 +105,16 @@ export const context = async (vectorStore) => {
     combineDocsChain: questionAnswerChain,
   });
 }
-
-
+//"llama2", "llama3", "llama3-chatqa", "llava-llama3"
+const models = ["llama2", "llama3", "llama3-chatqa", "llava-llama3"]
+const questions = [
+  "What are must-visit tourist locations in the city",
+  "When should I visit",
+  "Are there any events I should look into",
+  "How do I get around the city",
+  "is there anything I should be weary of",
+  "Overall, would you say the city is worth visiting",
+]
 
 
 // creates RAG chain given a vector store
@@ -148,8 +149,92 @@ export const createChain = async (vectorStore) => {
   });
 }
 
+const store = await loadDocuments("chatbot2")
+
+let data = []
+
+for(let i = 0; i < models.length; i++){
+  let startTime, endTime
+  let modName = models[i]
+  const ai = new ChatOllama({
+    baseUrl: "http://localhost:11434",
+    model: modName,
+  });
+  console.log(`\n============================================`,ai["model"])
+
+  const chain = await context(store, ai)
+  let chatHistory = [] 
+  let outHistory = []
+  
+  for(let j = 0; j < questions.length; j++){
+
+    let question = questions[j]
+    console.log(`\nYou: `,question)
+    startTime = performance.now()
+    const res = await chain.invoke({
+      chat_history: chatHistory,
+      input: question
+    })
+    endTime = performance.now()
+
+    let ans = res["answer"]
+    let perf = (endTime-startTime)
+
+    console.log(`AI: `,ans)
+    console.log(`Time: `, perf)
+
+    chatHistory.push(new HumanMessage(question))
+    chatHistory.push(new AIMessage(ans))
+
+    outHistory.push({
+      question: `Q${j}: ${question}`,
+      answer: `A${j}: ${ans}`,
+      time: `T${j}: ${perf}`
+    })
+  }
+  
+  data.push(outHistory)
+  const dataString = outHistory.map(entry => `${entry.question}\n${entry.answer}\n${entry.time}`).join('\n\n')
+
+  fs.writeFile(`outputs2/${modName}Output.txt`, dataString, (err) => {
+    if (err) {
+      console.error('Error writing to file:', err);
+    } else {
+      console.log('Data saved to file successfully!');
+    }
+  });
+}
+ 
+console.log("\nCOMPLETED")
 
 
+
+// const ai = new ChatOllama({
+//   baseUrl: "http://localhost:11434", 
+//   model: "llama2",
+// })
+
+// const chain = await context(store, ai)
+// let chatHistory = [] 
+
+// for(let j = 0; j < questions.length; j++){
+
+//   let question = questions[j]
+//   console.log(`\nYou: `,question)
+
+//   const res = await chain.invoke({
+//     chat_history: chatHistory,
+//     input: question
+//   })
+
+//   let ans = res["answer"]
+
+//   console.log(`\nAI: `,ans)
+
+//   chatHistory.push(new HumanMessage(question))
+//   chatHistory.push(new AIMessage(ans))
+// }
+// console.log(chatHistory)
 
 app.get("/", (req, res) => {
   res.send("Hello from Express!");
